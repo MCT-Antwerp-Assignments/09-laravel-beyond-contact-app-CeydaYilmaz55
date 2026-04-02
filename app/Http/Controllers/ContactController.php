@@ -13,8 +13,23 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
+    
+
     public function store(Request $request)
     {
+        $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+         ], [
+            'first_name.required' => 'Voornaam is verplicht.',
+            'last_name.required' => 'Achternaam is verplicht.',
+            'email.required' => 'E-mail is verplicht.',
+            'email.email' => 'Geef een geldig e-mailadres in.',
+       ]);
+
         Contact::create([
             'user_id' => Auth::id(),
             'first_name' => $request->first_name,
@@ -41,6 +56,19 @@ class ContactController extends Controller
         if ($contact->user_id !== Auth::id()) {
             abort(403);
         }
+
+        $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|max:255',
+            'address' => 'nullable|max:255',
+         ], [
+            'first_name.required' => 'Voornaam is verplicht.',
+            'last_name.required' => 'Achternaam is verplicht.',
+            'email.required' => 'E-mail is verplicht.',
+            'email.email' => 'Geef een geldig e-mailadres in.',
+        ]);
 
         $contact->update([
             'first_name' => $request->first_name,

@@ -6,6 +6,15 @@
 
     <form action="{{ route('contacts.store') }}" method="POST">
         @csrf
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+         @endif
 
         <div class="mb-3">
             <label for="first_name" class="form-label">Voornaam</label>
@@ -34,5 +43,6 @@
 
         <button type="submit" class="btn btn-primary">Opslaan</button>
     </form>
+    
 </div>
 @endsection
