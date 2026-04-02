@@ -49,6 +49,28 @@
             @else
                 <p>Je hebt nog geen contacten.</p>
             @endif
+              @if ($deletedContacts->count())
+                <div class="mt-4">
+                    <h3>Verwijderde contacten</h3>
+
+                    <ul class="list-group">
+                        @foreach ($deletedContacts as $contact)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    {{ $contact->first_name }} {{ $contact->last_name }} - {{ $contact->email }}
+                                </div>
+
+                                <form action="{{ route('contacts.restore', $contact->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Restore
+                                    </button>
+                                </form>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
     </div>
 </div>

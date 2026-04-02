@@ -22,6 +22,10 @@ class HomeController extends Controller
     {
         $contacts = Contact::where('user_id', Auth::id())->paginate(5);
 
-        return view('home', compact('contacts'));
+        $deletedContacts = Contact::onlyTrashed()
+            ->where('user_id', Auth::id())
+            ->get();
+
+        return view('home', compact('contacts', 'deletedContacts'));
     }
 }

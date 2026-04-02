@@ -32,3 +32,7 @@ Route::put('/contacts/{contact}', [ContactController::class, 'update'])
 Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
     ->middleware('auth')
     ->name('contacts.destroy');
+
+Route::post('/contacts/{id}/restore', [ContactController::class, 'restore'])
+    ->middleware('auth')
+    ->name('contacts.restore');
