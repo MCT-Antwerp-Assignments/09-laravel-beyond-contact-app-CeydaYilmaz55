@@ -2,21 +2,50 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+    <div class="card">
+        <div class="card-header">Mijn contacten</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
-            </div>
+            @endif
+
+            <a href="{{ route('contacts.create') }}" class="btn btn-primary mb-3">
+                Add new contact
+            </a>
+
+            @if ($contacts->count())
+                <ul class="list-group">
+                    @foreach ($contacts as $contact)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ $contact->first_name }} {{ $contact->last_name }}</strong><br>
+                                {{ $contact->email }}<br>
+                                {{ $contact->phone }}<br>
+                                {{ $contact->address }}
+                            </div>
+
+                            <div>
+                                <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>Je hebt nog geen contacten.</p>
+            @endif
         </div>
     </div>
 </div>
