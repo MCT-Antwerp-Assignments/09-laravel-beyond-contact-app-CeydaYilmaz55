@@ -60,12 +60,22 @@
                                     {{ $contact->first_name }} {{ $contact->last_name }} - {{ $contact->email }}
                                 </div>
 
+                                <div class="d-flex gap-2">
                                 <form action="{{ route('contacts.restore', $contact->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-success">
                                         Restore
                                     </button>
                                 </form>
+
+                                <form action="{{ route('contacts.forceDelete', $contact->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Delete permanently
+                                    </button>
+                                </form>
+                            </div>
                             </li>
                         @endforeach
                     </ul>

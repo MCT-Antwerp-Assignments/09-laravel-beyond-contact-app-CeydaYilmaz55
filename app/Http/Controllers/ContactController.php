@@ -92,7 +92,7 @@ class ContactController extends Controller
         return redirect()->route('home')->with('success', 'Contact deleted!');
     }
     public function restore($id)
-{
+    {
     $contact = Contact::withTrashed()
         ->where('id', $id)
         ->where('user_id', Auth::id())
@@ -100,5 +100,17 @@ class ContactController extends Controller
     $contact->restore();
 
     return redirect()->route('home')->with('success', 'Contact restored!');
-}
+    }
+
+    public function forceDelete($id)
+    {
+        $contact = Contact::withTrashed()
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $contact->forceDelete();
+
+        return redirect()->route('home')->with('success', 'Contact permanently deleted!');
+    }
 }
