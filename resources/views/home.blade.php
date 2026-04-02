@@ -43,6 +43,9 @@
                         </li>
                     @endforeach
                 </ul>
+                <div class="mt-3">
+                    {{ $contacts->links() }}
+                </div>
             @else
                 <p>Je hebt nog geen contacten.</p>
             @endif
